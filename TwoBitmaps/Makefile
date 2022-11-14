@@ -31,7 +31,7 @@ BUILD    := build
 SOURCES  := source
 INCLUDES := include
 DATA     := data
-GRAPHICS :=
+GRAPHICS := assets
 AUDIO    :=
 ICON     :=
 
@@ -205,9 +205,10 @@ $(SOUNDBANK) : $(MODFILES)
 # add additional rules like this for each image extension
 # you use in the graphics folders
 #---------------------------------------------------------------------------------
-%.s %.h: %.png %.grit
-#---------------------------------------------------------------------------------
-	grit $< -fts -o$*
+%.s %.h: %.png
+#---------------------------------------------------------------------------------	
+	echo $*
+	../assets/DSC.Toolchain.AssetBuild.exe -i$< -h$*.h -s$*.s
 
 #---------------------------------------------------------------------------------
 # Convert non-GRF game icon to GRF if needed
