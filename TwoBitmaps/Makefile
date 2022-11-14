@@ -6,6 +6,14 @@ ifeq ($(strip $(DEVKITARM)),)
 $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
 endif
 
+ifeq ($(strip $(DSCENGINE)),)
+$(error "Environment variable missing DSCENGINE")
+endif
+
+ifeq ($(strip $(DSCTOOLS)),)
+$(error "Environment variable missing DSCTOOLS")
+endif
+
 # These set the information text in the nds file
 #GAME_TITLE     := My Wonderful Homebrew
 #GAME_SUBTITLE1 := built with devkitARM
@@ -208,7 +216,7 @@ $(SOUNDBANK) : $(MODFILES)
 %.s %.h: %.png
 #---------------------------------------------------------------------------------	
 	echo $*
-	../assets/DSC.Toolchain.AssetBuild.exe -i$< -h$*.h -s$*.s
+	$(DSCTOOLS)/DSC.Toolchain.AssetBuild.exe -i$< -h$*.h -s$*.s
 
 #---------------------------------------------------------------------------------
 # Convert non-GRF game icon to GRF if needed
