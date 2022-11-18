@@ -12,19 +12,16 @@ public:
 	{
 		consoleDemoInit();		
 	
-		iprintf("Vector:\n");
-		Vector<int> v;
-		v.clear();
-		v.push_back(1);
-		v.push_back(2);
-		v.push_back(3);		
-			
-		for(int i=0;i<v.size();i++)
-			iprintf("%i ", v[i]);	
+		iprintf("Press keys to trigger events...\n");
 		
-		iprintf("\n");
-		
+		// example of static event handler
+		// alternative: 
+		// key_up.add_event(key_down_hanlder);
 		key_down += key_down_hanlder;
+		
+		// example of class member event handler
+		// we need to also specify the instance that 
+		// runs the non-static event handler
 		key_up.add_event(&TestScene::key_up_hanlder, this);
 	}
 
@@ -37,7 +34,9 @@ private:
 	
 	static void key_down_hanlder(void* sender, void* _keys)
 	{
-		const int& keys = (int)_keys;
+		// the key_* events send the keys bits directly as an int through the event args
+		// so we need to dispatch it before usage:
+		const int& keys = (int)_keys; 
 		TestScene*& scene = (TestScene*&)sender;
 		
 		scene->events_count++;
@@ -49,11 +48,11 @@ private:
 		}	
 		iprintf("Events count: %i\n\n", scene->events_count);
 				
-		/*if(keys & KEY_TOUCH)
+		if(keys & KEY_TOUCH)
 		{
-			scene->key_up -= &TestScene::key_up_hanlder;
+			scene->key_up.remove_event(&TestScene::key_up_hanlder, scene);
 			iprintf("Removed keys up handler\n\n");
-		}*/
+		}
 	}
 	
 	void key_up_hanlder(void* sender, void* _keys)
