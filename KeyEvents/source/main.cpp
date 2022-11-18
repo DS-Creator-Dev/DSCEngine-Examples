@@ -25,7 +25,7 @@ public:
 		iprintf("\n");
 		
 		key_down += key_down_hanlder;
-		key_up += key_up_hanlder;
+		key_up.add_event(&TestScene::key_up_hanlder, this);
 	}
 
 	int events_count = 0;
@@ -48,15 +48,15 @@ private:
 			if(keys & keyIds[i]) iprintf("%s ",keyNames[i]);
 		}	
 		iprintf("Events count: %i\n\n", scene->events_count);
-		
-		if(keys & KEY_TOUCH)
+				
+		/*if(keys & KEY_TOUCH)
 		{
-			scene->key_up -= key_up_hanlder;
+			scene->key_up -= &TestScene::key_up_hanlder;
 			iprintf("Removed keys up handler\n\n");
-		}
+		}*/
 	}
 	
-	static void key_up_hanlder(void* sender, void* _keys)
+	void key_up_hanlder(void* sender, void* _keys)
 	{
 		const int& keys = (int)_keys;
 		TestScene*& scene = (TestScene*&)sender;

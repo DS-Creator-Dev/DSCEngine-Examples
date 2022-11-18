@@ -31,7 +31,7 @@ public:
 		bgSetScroll(SUB_BG2, buzz(t), 0);
 		bgUpdate();		
 		t+=0.2;				
-	}	
+	}		
 };
 
 dsc_launch(Scene1);
