@@ -1,7 +1,6 @@
+#include <DSC>
 #include <nds.h>
 #include <stdio.h>
-
-#include <DSC>
 
 using namespace DSC;
 

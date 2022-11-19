@@ -1,4 +1,5 @@
 #include <DSC>
+#include <nds.h>
 #include "rainbow.h"
 #include "face.h"
 #include "sub.h"
