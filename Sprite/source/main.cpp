@@ -10,13 +10,15 @@ using namespace DSC;
 class MyScene : public Scene
 {		
 private:
-	Allocator allocator = Allocator::defaultSubSpriteVram();
+	//Allocator allocator = Allocator::defaultMainSpriteVram();
+	Allocator allocator = Allocator((int)Hardware::MainEngine::ObjVram, 64*1024);	
+	//Allocator sub_obj_vram_allocator = Allocator((int)Hardware::SubEngine::ObjVram, 128*1024);
 	PaletteManager* sprite_palette;
 	PaletteLoader* palette_loader;
 	
 	ObjAllocator* obj_alloc;
 	
-	Sprite* cat = new Sprite(SIZE_32x32, Engine::Sub);
+	Sprite* cat = new Sprite(SIZE_32x32, Engine::Main);
 		
 public:
 	void init() override
@@ -29,12 +31,12 @@ public:
 		
 		Hardware::VramBank('E').main().sprite().vram().config();		
 		Hardware::VramBank('D').sub().sprite().vram().config();		
-		Hardware::VramBank('I').sub().sprite().ext_palette().config();				
+		Hardware::VramBank('F').main().sprite().ext_palette().config();				
 		key_down += key_down_hanlder;		
 								
-		Debug::log("Ext pal = %x", Hardware::SubEngine::ObjExtendedPalette(0));
+		Debug::log("Ext pal = %x", Hardware::MainEngine::ObjExtendedPalette(0));
 				
-		sprite_palette = new PaletteManager(Hardware::SubEngine::ObjExtendedPalette(0));	
+		sprite_palette = new PaletteManager(Hardware::MainEngine::ObjExtendedPalette(0));	
 		palette_loader = new PaletteLoader(nullptr, {sprite_palette});
 		
 		obj_alloc = new ObjAllocator(&allocator, palette_loader);
@@ -48,12 +50,12 @@ public:
 
 		palette_loader->set_default_allocation_mode(PaletteLoader::ALLOC_MODE_EXTENDED_PALETTES);
 				
-		Hardware::VramBank('I').lcd().config();						
+		Hardware::VramBank('F').lcd().config();						
 		
 		cat->set_default_allocator(obj_alloc);		
 		cat->add_frame(new ObjFrame(&ROA_cat_sprite88, 0,0));
 		
-		Hardware::VramBank('I').sub().sprite().ext_palette().config();		
+		Hardware::VramBank('F').main().sprite().ext_palette().config();		
 		
 		cat->update_position();
 		cat->update_visual();
