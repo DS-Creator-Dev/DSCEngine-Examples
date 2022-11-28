@@ -216,7 +216,7 @@ $(SOUNDBANK) : $(MODFILES)
 %.s %.h: %.png
 #---------------------------------------------------------------------------------	
 	echo $*
-	$(DSCTOOLS)/DSC.Toolchain.AssetBuild.exe -tiles -8bpp -mw4 -mh4 -i$< -h$*.h -s$*.s
+	$(DSCTOOLS)/DSC.Toolchain.AssetBuild.exe -i$< -h$*.h -s$*.s
 
 #---------------------------------------------------------------------------------
 # Convert non-GRF game icon to GRF if needed

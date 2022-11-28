@@ -2,6 +2,7 @@
 #include <nds.h>
 #include "red_cat.h"
 #include "blue_cat.h"
+#include "bitmap.h"
 
 using namespace DSC;
 
@@ -48,6 +49,9 @@ public:
 	{
 		GenericScene256::init();
 		
+		require_bitmap(MAIN_BG3, &ROA_bitmap8);
+		require_bitmap(SUB_BG3, &ROA_bitmap8);
+		
 		red_cat = create_sprite(new Sprite(SIZE_32x32, Engine::Main));
 		
 		blue_cat = create_sprite(new Sprite(SIZE_32x32, Engine::Sub));
@@ -64,7 +68,7 @@ public:
 	
 	void frame() override
 	{					
-		GenericScene256::frame();		
+		GenericScene256::frame();				
 	}		
 	
 	void on_key_held(void* sender, void* args)

@@ -20,13 +20,13 @@ public:
 		require_bitmap(MAIN_BG3, &ROA_rainbow8);
 		
 		require_bitmap(SUB_BG2, &ROA_sub8);
-		require_bitmap(SUB_BG3, &ROA_rainbow8);
+		require_bitmap(SUB_BG3, &ROA_rainbow8);		
 	}	
 	
 	float t=0;
 	
 	void frame() override
-	{		
+	{				
 		// scroll to highlight the fact there are different backgrounds
 		bgSetScroll(MAIN_BG2, face_x(t), face_y(t));						
 		bgSetScroll(SUB_BG2, buzz(t), 0);
