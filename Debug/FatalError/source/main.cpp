@@ -2,20 +2,18 @@
 #include <stdio.h>
 #include <DSC>
 
+// asset data
+#include "info.h"
+
 using namespace DSC;
 
-class Scene1 : public Scene
+class Scene1 : public GenericScene256
 {
 public:
 	void init() override
-	{		
-		consoleDemoInit();		
-	
-		iprintf("\n DSC Debug Utility Test \n");
-		iprintf(" Press a key to send debug\n messages:\n\n");
-		iprintf(" A     - assert(1<2);\n");
-		iprintf(" B     - assert(2+2==5);\n");
-				
+	{	
+		GenericScene256::init();
+		require_bitmap(SUB_BG3, &ROA_info8);						
 		
 		key_down += key_down_hanlder;
 	}

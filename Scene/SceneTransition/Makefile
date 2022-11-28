@@ -7,7 +7,11 @@ $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>dev
 endif
 
 ifeq ($(strip $(DSCENGINE)),)
-$(error "Please set DSCENGINE in your environment. export DSCENGINE=<path to>DSCEngine")
+$(error "Environment variable missing DSCENGINE")
+endif
+
+ifeq ($(strip $(DSCTOOLS)),)
+$(error "Environment variable missing DSCTOOLS")
 endif
 
 # These set the information text in the nds file
@@ -35,7 +39,7 @@ BUILD    := build
 SOURCES  := source
 INCLUDES := include
 DATA     := data
-GRAPHICS :=
+GRAPHICS := assets
 AUDIO    :=
 ICON     :=
 
@@ -209,9 +213,10 @@ $(SOUNDBANK) : $(MODFILES)
 # add additional rules like this for each image extension
 # you use in the graphics folders
 #---------------------------------------------------------------------------------
-%.s %.h: %.png %.grit
-#---------------------------------------------------------------------------------
-	grit $< -fts -o$*
+%.s %.h: %.png
+#---------------------------------------------------------------------------------	
+	echo $*
+	$(DSCTOOLS)/DSC.Toolchain.AssetBuild.exe -i$< -h$*.h -s$*.s
 
 #---------------------------------------------------------------------------------
 # Convert non-GRF game icon to GRF if needed

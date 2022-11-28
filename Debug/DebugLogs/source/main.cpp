@@ -2,25 +2,18 @@
 #include <nds.h>
 #include <stdio.h>
 
+// asset data
+#include "info.h"
+
 using namespace DSC;
 
-class Scene1 : public Scene
+class Scene1 : public GenericScene256
 {
 public:
 	void init() override
 	{		
-		consoleDemoInit();		
-	
-		iprintf("\n DSC Debug Utility Test \n");
-		iprintf(" Press a key to send debug\n messages:\n\n");
-		iprintf(" A     - Beep!\n");
-		iprintf(" B     - Boop!\n");
-		iprintf(" X     - Ping!\n");
-		iprintf(" Y     - Pong!\n");
-		iprintf(" Touch - Get coords\n");
-		iprintf(" L     - Warning\n");
-		iprintf(" R     - Error\n");
-		
+		GenericScene256::init();
+		require_bitmap(SUB_BG3, &ROA_info8);		
 		
 		key_down += key_down_hanlder;
 	}
@@ -30,6 +23,7 @@ public:
 
 void Scene1::key_down_hanlder(void* sender, void* _keys)
 {
+	// hybrid code that must be changed :))
 	switch((const int)_keys)
 	{
 		case KEY_A: Debug::log("Beep!"); break;
